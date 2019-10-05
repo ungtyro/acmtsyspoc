@@ -47,6 +47,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -89,6 +90,7 @@
       <DependentUpon>AcmtSysModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Customer\CustomerManager.cs" />
+    <Compile Include="EntitiesHelper.cs" />
     <Compile Include="Models\CustomerModel.cs" />
     <Compile Include="MasterBankAccountType.cs">
       <DependentUpon>AcmtSysModel.tt</DependentUpon>

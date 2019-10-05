@@ -7,6 +7,17 @@ using System.Threading.Tasks;
 
 namespace Ung.AcmtSys.Business.Models
 {
+    public enum AddressType
+    {
+        HOME,
+        WORK
+    }
+
+    public enum CustomerStatus
+    {
+        ACT,
+        INA
+    }
     public class CustomerModel
     {
         [JsonProperty(PropertyName = "customer_id")]
@@ -22,13 +33,13 @@ namespace Ung.AcmtSys.Business.Models
         public string PersonalId { get; set; }
 
         [JsonProperty(PropertyName = "birth_date")]
-        public int Birthdate { get; set; }
+        public int? Birthdate { get; set; }
 
         [JsonProperty(PropertyName = "sex")]
         public string Sex { get; set; }
 
         [JsonProperty(PropertyName = "address")]
-        public AddressModel AddressModel { get; set; }
+        public AddressModel Address { get; set; }
     }
 
     public class AddressModel
