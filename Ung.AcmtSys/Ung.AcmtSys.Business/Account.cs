@@ -28,7 +28,7 @@ namespace Ung.AcmtSys.Business
         public Nullable<System.DateTime> OpenDate { get; set; }
         public string Status { get; set; }
         public string CurrencyCode { get; set; }
-        public Nullable<decimal> CurrentBalance { get; set; }
+        public decimal CurrentBalance { get; set; }
     
         public virtual Customer Customer { get; set; }
         public virtual MasterBankAccountType MasterBankAccountType { get; set; }

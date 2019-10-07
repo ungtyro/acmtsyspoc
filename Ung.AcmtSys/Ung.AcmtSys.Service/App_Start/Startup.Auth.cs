@@ -42,7 +42,7 @@ namespace Ung.AcmtSys.Service
                 // In production mode set AllowInsecureHttp = false
                 AllowInsecureHttp = true
             };
-
+            app.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);
             // Enable the application to use bearer tokens to authenticate users
             app.UseOAuthBearerTokens(OAuthOptions);
 

@@ -17,34 +17,31 @@ namespace Ung.AcmtSys.Business
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Customer()
         {
-            this.Accounts = new HashSet<Account>();
             this.CustomerAddresses = new HashSet<CustomerAddress>();
             this.CustomerEmails = new HashSet<CustomerEmail>();
             this.CustomerPhones = new HashSet<CustomerPhone>();
+            this.Accounts = new HashSet<Account>();
         }
     
         public System.Guid CustomerId { get; set; }
-        public Nullable<System.Guid> BranchId { get; set; }
         public string CustomerType { get; set; }
         public string Prefix { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string MiddleName { get; set; }
         public string Sex { get; set; }
-        public string IdCard { get; set; }
-        public string PassportNumber { get; set; }
+        public string PersonalCardId { get; set; }
         public Nullable<int> Birthdate { get; set; }
         public Nullable<System.DateTime> RegisterDateUTC { get; set; }
         public string Status { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Account> Accounts { get; set; }
-        public virtual Branch Branch { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CustomerAddress> CustomerAddresses { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CustomerEmail> CustomerEmails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CustomerPhone> CustomerPhones { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Account> Accounts { get; set; }
     }
 }

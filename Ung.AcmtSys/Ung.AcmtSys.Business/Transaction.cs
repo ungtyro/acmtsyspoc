@@ -30,7 +30,7 @@ namespace Ung.AcmtSys.Business
         public string ExternalIdentifierTwo { get; set; }
         public string ExternalIdentifierThree { get; set; }
     
-        public virtual Account Account { get; set; }
         public virtual MasterBankTransactionType MasterBankTransactionType { get; set; }
+        public virtual Account Account { get; set; }
     }
 }

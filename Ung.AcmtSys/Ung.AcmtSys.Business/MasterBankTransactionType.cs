@@ -24,7 +24,6 @@ namespace Ung.AcmtSys.Business
         public string TransactionType { get; set; }
         public string TransactionName { get; set; }
         public string TransactionDesscription { get; set; }
-        public Nullable<decimal> FeeRate { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Transaction> Transactions { get; set; }

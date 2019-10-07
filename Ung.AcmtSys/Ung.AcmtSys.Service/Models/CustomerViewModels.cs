@@ -1,23 +1,11 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Web;
+using Newtonsoft.Json;
 
-namespace Ung.AcmtSys.Business.Models
+namespace Ung.AcmtSys.Service.Models
 {
-    public enum AddressType
-    {
-        HOME,
-        WORK
-    }
-
-    public enum CustomerStatus
-    {
-        ACT,
-        INA
-    }
     public class CustomerModel
     {
         [JsonProperty(PropertyName = "customer_id")]

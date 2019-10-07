@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="acmtsysdbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="acmtsysdbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Accounts">
           <Key>
             <PropertyRef Name="AccountId" />
@@ -17,16 +17,7 @@
           <Property Name="OpenDate" Type="datetime" />
           <Property Name="Status" Type="nvarchar" MaxLength="10" />
           <Property Name="CurrencyCode" Type="nvarchar" MaxLength="10" />
-          <Property Name="CurrentBalance" Type="decimal" Precision="18" Scale="5" />
-        </EntityType>
-        <EntityType Name="Branches">
-          <Key>
-            <PropertyRef Name="BranchId" />
-          </Key>
-          <Property Name="BranchId" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="BranchType" Type="nvarchar" MaxLength="50" />
-          <Property Name="BranchCode" Type="nvarchar" MaxLength="40" />
-          <Property Name="BranchName" Type="nvarchar" MaxLength="140" />
+          <Property Name="CurrentBalance" Type="decimal" Precision="18" Scale="5" Nullable="false" />
         </EntityType>
         <EntityType Name="CustomerAddress">
           <Key>
@@ -69,15 +60,13 @@
             <PropertyRef Name="CustomerId" />
           </Key>
           <Property Name="CustomerId" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="BranchId" Type="uniqueidentifier" />
           <Property Name="CustomerType" Type="nvarchar" MaxLength="50" />
           <Property Name="Prefix" Type="nvarchar" MaxLength="50" />
           <Property Name="FirstName" Type="nvarchar" MaxLength="140" />
           <Property Name="LastName" Type="nvarchar" MaxLength="140" />
           <Property Name="MiddleName" Type="nvarchar" MaxLength="140" />
           <Property Name="Sex" Type="nvarchar" MaxLength="10" />
-          <Property Name="IdCard" Type="nvarchar" MaxLength="50" />
-          <Property Name="PassportNumber" Type="nvarchar" MaxLength="140" />
+          <Property Name="PersonalCardId" Type="nvarchar" MaxLength="50" />
           <Property Name="Birthdate" Type="int" />
           <Property Name="RegisterDateUTC" Type="datetime" />
           <Property Name="Status" Type="nvarchar" MaxLength="10" />
@@ -99,7 +88,6 @@
           <Property Name="TransactionType" Type="nvarchar" MaxLength="50" />
           <Property Name="TransactionName" Type="nvarchar" MaxLength="50" />
           <Property Name="TransactionDesscription" Type="nvarchar" MaxLength="140" />
-          <Property Name="FeeRate" Type="decimal" Precision="18" Scale="5" />
         </EntityType>
         <EntityType Name="Transactions">
           <Key>
@@ -181,18 +169,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Customers_Branches">
-          <End Role="Branches" Type="Self.Branches" Multiplicity="0..1" />
-          <End Role="Customers" Type="Self.Customers" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Branches">
-              <PropertyRef Name="BranchId" />
-            </Principal>
-            <Dependent Role="Customers">
-              <PropertyRef Name="BranchId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Transactions_Accounts">
           <End Role="Accounts" Type="Self.Accounts" Multiplicity="0..1" />
           <End Role="Transactions" Type="Self.Transactions" Multiplicity="*" />
@@ -219,7 +195,6 @@
         </Association>
         <EntityContainer Name="acmtsysdbModelStoreContainer">
           <EntitySet Name="Accounts" EntityType="Self.Accounts" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Branches" EntityType="Self.Branches" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CustomerAddress" EntityType="Self.CustomerAddress" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CustomerEmail" EntityType="Self.CustomerEmail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CustomerPhone" EntityType="Self.CustomerPhone" Schema="dbo" store:Type="Tables" />
@@ -247,10 +222,6 @@
             <End Role="Customers" EntitySet="Customers" />
             <End Role="CustomerPhone" EntitySet="CustomerPhone" />
           </AssociationSet>
-          <AssociationSet Name="FK_Customers_Branches" Association="Self.FK_Customers_Branches">
-            <End Role="Branches" EntitySet="Branches" />
-            <End Role="Customers" EntitySet="Customers" />
-          </AssociationSet>
           <AssociationSet Name="FK_Transactions_Accounts" Association="Self.FK_Transactions_Accounts">
             <End Role="Accounts" EntitySet="Accounts" />
             <End Role="Transactions" EntitySet="Transactions" />
@@ -260,38 +231,48 @@
             <End Role="Transactions" EntitySet="Transactions" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="acmtsysdbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="Account">
-          <Key>
-            <PropertyRef Name="AccountId" />
-          </Key>
-          <Property Name="AccountId" Type="Guid" Nullable="false" />
-          <Property Name="CustomerId" Type="Guid" />
-          <Property Name="MasterBankAccountTypeId" Type="Guid" />
-          <Property Name="AccountNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="AccountName" Type="String" MaxLength="140" FixedLength="false" Unicode="true" />
-          <Property Name="OpenDate" Type="DateTime" Precision="3" />
-          <Property Name="Status" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="CurrencyCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="CurrentBalance" Type="Decimal" Precision="18" Scale="5" />
-          <NavigationProperty Name="Customer" Relationship="Self.FK_Accounts_Customers" FromRole="Accounts" ToRole="Customers" />
-          <NavigationProperty Name="MasterBankAccountType" Relationship="Self.FK_Accounts_MasterBankAccountTypes" FromRole="Accounts" ToRole="MasterBankAccountTypes" />
-          <NavigationProperty Name="Transactions" Relationship="Self.FK_Transactions_Accounts" FromRole="Accounts" ToRole="Transactions" />
-        </EntityType>
-        <EntityType Name="Branch">
-          <Key>
-            <PropertyRef Name="BranchId" />
-          </Key>
-          <Property Name="BranchId" Type="Guid" Nullable="false" />
-          <Property Name="BranchType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="BranchCode" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
-          <Property Name="BranchName" Type="String" MaxLength="140" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Customers" Relationship="Self.FK_Customers_Branches" FromRole="Branches" ToRole="Customers" />
-        </EntityType>
+      <Schema Namespace="AcmtSysDbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="AcmtSysDbEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="CustomerAddresses" EntityType="AcmtSysDbModel.CustomerAddress" />
+          <EntitySet Name="CustomerEmails" EntityType="AcmtSysDbModel.CustomerEmail" />
+          <EntitySet Name="CustomerPhones" EntityType="AcmtSysDbModel.CustomerPhone" />
+          <EntitySet Name="MasterBankAccountTypes" EntityType="AcmtSysDbModel.MasterBankAccountType" />
+          <EntitySet Name="MasterBankTransactionTypes" EntityType="AcmtSysDbModel.MasterBankTransactionType" />
+          <EntitySet Name="Transactions" EntityType="AcmtSysDbModel.Transaction" />
+          <AssociationSet Name="FK_Transactions_MasterBankTransactionTypes" Association="AcmtSysDbModel.FK_Transactions_MasterBankTransactionTypes">
+            <End Role="MasterBankTransactionType" EntitySet="MasterBankTransactionTypes" />
+            <End Role="Transaction" EntitySet="Transactions" />
+          </AssociationSet>
+          <EntitySet Name="Customers" EntityType="AcmtSysDbModel.Customer" />
+          <AssociationSet Name="FK_CustomerAddress_Customers" Association="AcmtSysDbModel.FK_CustomerAddress_Customers">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="CustomerAddress" EntitySet="CustomerAddresses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CustomerEmail_Customers" Association="AcmtSysDbModel.FK_CustomerEmail_Customers">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="CustomerEmail" EntitySet="CustomerEmails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CustomerPhone_Customers" Association="AcmtSysDbModel.FK_CustomerPhone_Customers">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="CustomerPhone" EntitySet="CustomerPhones" />
+          </AssociationSet>
+          <EntitySet Name="Accounts" EntityType="AcmtSysDbModel.Account" />
+          <AssociationSet Name="FK_Accounts_Customers" Association="AcmtSysDbModel.FK_Accounts_Customers">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="Account" EntitySet="Accounts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Accounts_MasterBankAccountTypes" Association="AcmtSysDbModel.FK_Accounts_MasterBankAccountTypes">
+            <End Role="MasterBankAccountType" EntitySet="MasterBankAccountTypes" />
+            <End Role="Account" EntitySet="Accounts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Transactions_Accounts" Association="AcmtSysDbModel.FK_Transactions_Accounts">
+            <End Role="Account" EntitySet="Accounts" />
+            <End Role="Transaction" EntitySet="Transactions" />
+          </AssociationSet>
+        </EntityContainer>
         <EntityType Name="CustomerAddress">
           <Key>
             <PropertyRef Name="CustomerAddressId" />
@@ -306,7 +287,7 @@
           <Property Name="AddressLineOne" Type="String" MaxLength="140" FixedLength="false" Unicode="true" />
           <Property Name="AddressLineTwo" Type="String" MaxLength="140" FixedLength="false" Unicode="true" />
           <Property Name="AddressLineThree" Type="String" MaxLength="140" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Customer" Relationship="Self.FK_CustomerAddress_Customers" FromRole="CustomerAddress" ToRole="Customers" />
+          <NavigationProperty Name="Customer" Relationship="AcmtSysDbModel.FK_CustomerAddress_Customers" FromRole="CustomerAddress" ToRole="Customer" />
         </EntityType>
         <EntityType Name="CustomerEmail">
           <Key>
@@ -317,7 +298,7 @@
           <Property Name="EmailType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="EmailAddress" Type="String" MaxLength="320" FixedLength="false" Unicode="true" />
           <Property Name="AllowReceiveNews" Type="Boolean" />
-          <NavigationProperty Name="Customer" Relationship="Self.FK_CustomerEmail_Customers" FromRole="CustomerEmail" ToRole="Customers" />
+          <NavigationProperty Name="Customer" Relationship="AcmtSysDbModel.FK_CustomerEmail_Customers" FromRole="CustomerEmail" ToRole="Customer" />
         </EntityType>
         <EntityType Name="CustomerPhone">
           <Key>
@@ -329,30 +310,7 @@
           <Property Name="PhoneNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="PhoneContryCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="AreaCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Customer" Relationship="Self.FK_CustomerPhone_Customers" FromRole="CustomerPhone" ToRole="Customers" />
-        </EntityType>
-        <EntityType Name="Customer">
-          <Key>
-            <PropertyRef Name="CustomerId" />
-          </Key>
-          <Property Name="CustomerId" Type="Guid" Nullable="false" />
-          <Property Name="BranchId" Type="Guid" />
-          <Property Name="CustomerType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Prefix" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="FirstName" Type="String" MaxLength="140" FixedLength="false" Unicode="true" />
-          <Property Name="LastName" Type="String" MaxLength="140" FixedLength="false" Unicode="true" />
-          <Property Name="MiddleName" Type="String" MaxLength="140" FixedLength="false" Unicode="true" />
-          <Property Name="Sex" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="IdCard" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="PassportNumber" Type="String" MaxLength="140" FixedLength="false" Unicode="true" />
-          <Property Name="Birthdate" Type="Int32" />
-          <Property Name="RegisterDateUTC" Type="DateTime" Precision="3" />
-          <Property Name="Status" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Accounts" Relationship="Self.FK_Accounts_Customers" FromRole="Customers" ToRole="Accounts" />
-          <NavigationProperty Name="Branch" Relationship="Self.FK_Customers_Branches" FromRole="Customers" ToRole="Branches" />
-          <NavigationProperty Name="CustomerAddresses" Relationship="Self.FK_CustomerAddress_Customers" FromRole="Customers" ToRole="CustomerAddress" />
-          <NavigationProperty Name="CustomerEmails" Relationship="Self.FK_CustomerEmail_Customers" FromRole="Customers" ToRole="CustomerEmail" />
-          <NavigationProperty Name="CustomerPhones" Relationship="Self.FK_CustomerPhone_Customers" FromRole="Customers" ToRole="CustomerPhone" />
+          <NavigationProperty Name="Customer" Relationship="AcmtSysDbModel.FK_CustomerPhone_Customers" FromRole="CustomerPhone" ToRole="Customer" />
         </EntityType>
         <EntityType Name="MasterBankAccountType">
           <Key>
@@ -362,7 +320,7 @@
           <Property Name="AccountType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="AccountName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="AccountDescription" Type="String" MaxLength="140" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Accounts" Relationship="Self.FK_Accounts_MasterBankAccountTypes" FromRole="MasterBankAccountTypes" ToRole="Accounts" />
+          <NavigationProperty Name="Accounts" Relationship="AcmtSysDbModel.FK_Accounts_MasterBankAccountTypes" FromRole="MasterBankAccountType" ToRole="Account" />
         </EntityType>
         <EntityType Name="MasterBankTransactionType">
           <Key>
@@ -372,8 +330,7 @@
           <Property Name="TransactionType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="TransactionName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="TransactionDesscription" Type="String" MaxLength="140" FixedLength="false" Unicode="true" />
-          <Property Name="FeeRate" Type="Decimal" Precision="18" Scale="5" />
-          <NavigationProperty Name="Transactions" Relationship="Self.FK_Transactions_MasterBankTransactionTypes" FromRole="MasterBankTransactionTypes" ToRole="Transactions" />
+          <NavigationProperty Name="Transactions" Relationship="AcmtSysDbModel.FK_Transactions_MasterBankTransactionTypes" FromRole="MasterBankTransactionType" ToRole="Transaction" />
         </EntityType>
         <EntityType Name="Transaction">
           <Key>
@@ -394,62 +351,46 @@
           <Property Name="ExternalIdentifierOne" Type="String" MaxLength="140" FixedLength="false" Unicode="true" />
           <Property Name="ExternalIdentifierTwo" Type="String" MaxLength="140" FixedLength="false" Unicode="true" />
           <Property Name="ExternalIdentifierThree" Type="String" MaxLength="140" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Account" Relationship="Self.FK_Transactions_Accounts" FromRole="Transactions" ToRole="Accounts" />
-          <NavigationProperty Name="MasterBankTransactionType" Relationship="Self.FK_Transactions_MasterBankTransactionTypes" FromRole="Transactions" ToRole="MasterBankTransactionTypes" />
+          <NavigationProperty Name="MasterBankTransactionType" Relationship="AcmtSysDbModel.FK_Transactions_MasterBankTransactionTypes" FromRole="Transaction" ToRole="MasterBankTransactionType" />
+          <NavigationProperty Name="Account" Relationship="AcmtSysDbModel.FK_Transactions_Accounts" FromRole="Transaction" ToRole="Account" />
         </EntityType>
-        <Association Name="FK_Accounts_Customers">
-          <End Role="Customers" Type="Self.Customer" Multiplicity="0..1" />
-          <End Role="Accounts" Type="Self.Account" Multiplicity="*" />
+        <Association Name="FK_Transactions_MasterBankTransactionTypes">
+          <End Type="AcmtSysDbModel.MasterBankTransactionType" Role="MasterBankTransactionType" Multiplicity="0..1" />
+          <End Type="AcmtSysDbModel.Transaction" Role="Transaction" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Customers">
-              <PropertyRef Name="CustomerId" />
+            <Principal Role="MasterBankTransactionType">
+              <PropertyRef Name="MasterBankTransactionTypeId" />
             </Principal>
-            <Dependent Role="Accounts">
-              <PropertyRef Name="CustomerId" />
+            <Dependent Role="Transaction">
+              <PropertyRef Name="MasterBankTransactionTypeId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Accounts_MasterBankAccountTypes">
-          <End Role="MasterBankAccountTypes" Type="Self.MasterBankAccountType" Multiplicity="0..1" />
-          <End Role="Accounts" Type="Self.Account" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="MasterBankAccountTypes">
-              <PropertyRef Name="MasterBankAccountTypeId" />
-            </Principal>
-            <Dependent Role="Accounts">
-              <PropertyRef Name="MasterBankAccountTypeId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Transactions_Accounts">
-          <End Role="Accounts" Type="Self.Account" Multiplicity="0..1" />
-          <End Role="Transactions" Type="Self.Transaction" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Accounts">
-              <PropertyRef Name="AccountId" />
-            </Principal>
-            <Dependent Role="Transactions">
-              <PropertyRef Name="AccountId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Customers_Branches">
-          <End Role="Branches" Type="Self.Branch" Multiplicity="0..1" />
-          <End Role="Customers" Type="Self.Customer" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Branches">
-              <PropertyRef Name="BranchId" />
-            </Principal>
-            <Dependent Role="Customers">
-              <PropertyRef Name="BranchId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="CustomerId" />
+          </Key>
+          <Property Name="CustomerId" Type="Guid" Nullable="false" />
+          <Property Name="CustomerType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Prefix" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FirstName" Type="String" MaxLength="140" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="140" FixedLength="false" Unicode="true" />
+          <Property Name="MiddleName" Type="String" MaxLength="140" FixedLength="false" Unicode="true" />
+          <Property Name="Sex" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="PersonalCardId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Birthdate" Type="Int32" />
+          <Property Name="RegisterDateUTC" Type="DateTime" Precision="3" />
+          <Property Name="Status" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="CustomerAddresses" Relationship="AcmtSysDbModel.FK_CustomerAddress_Customers" FromRole="Customer" ToRole="CustomerAddress" />
+          <NavigationProperty Name="CustomerEmails" Relationship="AcmtSysDbModel.FK_CustomerEmail_Customers" FromRole="Customer" ToRole="CustomerEmail" />
+          <NavigationProperty Name="CustomerPhones" Relationship="AcmtSysDbModel.FK_CustomerPhone_Customers" FromRole="Customer" ToRole="CustomerPhone" />
+          <NavigationProperty Name="Accounts" Relationship="AcmtSysDbModel.FK_Accounts_Customers" FromRole="Customer" ToRole="Account" />
+        </EntityType>
         <Association Name="FK_CustomerAddress_Customers">
-          <End Role="Customers" Type="Self.Customer" Multiplicity="0..1" />
-          <End Role="CustomerAddress" Type="Self.CustomerAddress" Multiplicity="*" />
+          <End Type="AcmtSysDbModel.Customer" Role="Customer" Multiplicity="0..1" />
+          <End Type="AcmtSysDbModel.CustomerAddress" Role="CustomerAddress" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Customers">
+            <Principal Role="Customer">
               <PropertyRef Name="CustomerId" />
             </Principal>
             <Dependent Role="CustomerAddress">
@@ -458,10 +399,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_CustomerEmail_Customers">
-          <End Role="Customers" Type="Self.Customer" Multiplicity="0..1" />
-          <End Role="CustomerEmail" Type="Self.CustomerEmail" Multiplicity="*" />
+          <End Type="AcmtSysDbModel.Customer" Role="Customer" Multiplicity="0..1" />
+          <End Type="AcmtSysDbModel.CustomerEmail" Role="CustomerEmail" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Customers">
+            <Principal Role="Customer">
               <PropertyRef Name="CustomerId" />
             </Principal>
             <Dependent Role="CustomerEmail">
@@ -470,10 +411,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_CustomerPhone_Customers">
-          <End Role="Customers" Type="Self.Customer" Multiplicity="0..1" />
-          <End Role="CustomerPhone" Type="Self.CustomerPhone" Multiplicity="*" />
+          <End Type="AcmtSysDbModel.Customer" Role="Customer" Multiplicity="0..1" />
+          <End Type="AcmtSysDbModel.CustomerPhone" Role="CustomerPhone" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Customers">
+            <Principal Role="Customer">
               <PropertyRef Name="CustomerId" />
             </Principal>
             <Dependent Role="CustomerPhone">
@@ -481,189 +422,174 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Transactions_MasterBankTransactionTypes">
-          <End Role="MasterBankTransactionTypes" Type="Self.MasterBankTransactionType" Multiplicity="0..1" />
-          <End Role="Transactions" Type="Self.Transaction" Multiplicity="*" />
+        <EntityType Name="Account">
+          <Key>
+            <PropertyRef Name="AccountId" />
+          </Key>
+          <Property Name="AccountId" Type="Guid" Nullable="false" />
+          <Property Name="CustomerId" Type="Guid" />
+          <Property Name="MasterBankAccountTypeId" Type="Guid" />
+          <Property Name="AccountNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AccountName" Type="String" MaxLength="140" FixedLength="false" Unicode="true" />
+          <Property Name="OpenDate" Type="DateTime" Precision="3" />
+          <Property Name="Status" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="CurrencyCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="CurrentBalance" Type="Decimal" Nullable="false" Precision="18" Scale="5" />
+          <NavigationProperty Name="Customer" Relationship="AcmtSysDbModel.FK_Accounts_Customers" FromRole="Account" ToRole="Customer" />
+          <NavigationProperty Name="MasterBankAccountType" Relationship="AcmtSysDbModel.FK_Accounts_MasterBankAccountTypes" FromRole="Account" ToRole="MasterBankAccountType" />
+          <NavigationProperty Name="Transactions" Relationship="AcmtSysDbModel.FK_Transactions_Accounts" FromRole="Account" ToRole="Transaction" />
+        </EntityType>
+        <Association Name="FK_Accounts_Customers">
+          <End Type="AcmtSysDbModel.Customer" Role="Customer" Multiplicity="0..1" />
+          <End Type="AcmtSysDbModel.Account" Role="Account" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="MasterBankTransactionTypes">
-              <PropertyRef Name="MasterBankTransactionTypeId" />
+            <Principal Role="Customer">
+              <PropertyRef Name="CustomerId" />
             </Principal>
-            <Dependent Role="Transactions">
-              <PropertyRef Name="MasterBankTransactionTypeId" />
+            <Dependent Role="Account">
+              <PropertyRef Name="CustomerId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="AcmtsysdbEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Accounts" EntityType="Self.Account" />
-          <EntitySet Name="Branches" EntityType="Self.Branch" />
-          <EntitySet Name="CustomerAddresses" EntityType="Self.CustomerAddress" />
-          <EntitySet Name="CustomerEmails" EntityType="Self.CustomerEmail" />
-          <EntitySet Name="CustomerPhones" EntityType="Self.CustomerPhone" />
-          <EntitySet Name="Customers" EntityType="Self.Customer" />
-          <EntitySet Name="MasterBankAccountTypes" EntityType="Self.MasterBankAccountType" />
-          <EntitySet Name="MasterBankTransactionTypes" EntityType="Self.MasterBankTransactionType" />
-          <EntitySet Name="Transactions" EntityType="Self.Transaction" />
-          <AssociationSet Name="FK_Accounts_Customers" Association="Self.FK_Accounts_Customers">
-            <End Role="Customers" EntitySet="Customers" />
-            <End Role="Accounts" EntitySet="Accounts" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Accounts_MasterBankAccountTypes" Association="Self.FK_Accounts_MasterBankAccountTypes">
-            <End Role="MasterBankAccountTypes" EntitySet="MasterBankAccountTypes" />
-            <End Role="Accounts" EntitySet="Accounts" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Transactions_Accounts" Association="Self.FK_Transactions_Accounts">
-            <End Role="Accounts" EntitySet="Accounts" />
-            <End Role="Transactions" EntitySet="Transactions" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Customers_Branches" Association="Self.FK_Customers_Branches">
-            <End Role="Branches" EntitySet="Branches" />
-            <End Role="Customers" EntitySet="Customers" />
-          </AssociationSet>
-          <AssociationSet Name="FK_CustomerAddress_Customers" Association="Self.FK_CustomerAddress_Customers">
-            <End Role="Customers" EntitySet="Customers" />
-            <End Role="CustomerAddress" EntitySet="CustomerAddresses" />
-          </AssociationSet>
-          <AssociationSet Name="FK_CustomerEmail_Customers" Association="Self.FK_CustomerEmail_Customers">
-            <End Role="Customers" EntitySet="Customers" />
-            <End Role="CustomerEmail" EntitySet="CustomerEmails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_CustomerPhone_Customers" Association="Self.FK_CustomerPhone_Customers">
-            <End Role="Customers" EntitySet="Customers" />
-            <End Role="CustomerPhone" EntitySet="CustomerPhones" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Transactions_MasterBankTransactionTypes" Association="Self.FK_Transactions_MasterBankTransactionTypes">
-            <End Role="MasterBankTransactionTypes" EntitySet="MasterBankTransactionTypes" />
-            <End Role="Transactions" EntitySet="Transactions" />
-          </AssociationSet>
-        </EntityContainer>
+        <Association Name="FK_Accounts_MasterBankAccountTypes">
+          <End Type="AcmtSysDbModel.MasterBankAccountType" Role="MasterBankAccountType" Multiplicity="0..1" />
+          <End Type="AcmtSysDbModel.Account" Role="Account" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MasterBankAccountType">
+              <PropertyRef Name="MasterBankAccountTypeId" />
+            </Principal>
+            <Dependent Role="Account">
+              <PropertyRef Name="MasterBankAccountTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Transactions_Accounts">
+          <End Type="AcmtSysDbModel.Account" Role="Account" Multiplicity="0..1" />
+          <End Type="AcmtSysDbModel.Transaction" Role="Transaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="AccountId" />
+            </Principal>
+            <Dependent Role="Transaction">
+              <PropertyRef Name="AccountId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="acmtsysdbModelStoreContainer" CdmEntityContainer="AcmtsysdbEntities">
-          <EntitySetMapping Name="Accounts">
-            <EntityTypeMapping TypeName="acmtsysdbModel.Account">
-              <MappingFragment StoreEntitySet="Accounts">
-                <ScalarProperty Name="AccountId" ColumnName="AccountId" />
-                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
-                <ScalarProperty Name="MasterBankAccountTypeId" ColumnName="MasterBankAccountTypeId" />
-                <ScalarProperty Name="AccountNumber" ColumnName="AccountNumber" />
-                <ScalarProperty Name="AccountName" ColumnName="AccountName" />
-                <ScalarProperty Name="OpenDate" ColumnName="OpenDate" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="CurrencyCode" ColumnName="CurrencyCode" />
-                <ScalarProperty Name="CurrentBalance" ColumnName="CurrentBalance" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Branches">
-            <EntityTypeMapping TypeName="acmtsysdbModel.Branch">
-              <MappingFragment StoreEntitySet="Branches">
-                <ScalarProperty Name="BranchId" ColumnName="BranchId" />
-                <ScalarProperty Name="BranchType" ColumnName="BranchType" />
-                <ScalarProperty Name="BranchCode" ColumnName="BranchCode" />
-                <ScalarProperty Name="BranchName" ColumnName="BranchName" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
+        <EntityContainerMapping StorageEntityContainer="acmtsysdbModelStoreContainer" CdmEntityContainer="AcmtSysDbEntities">
           <EntitySetMapping Name="CustomerAddresses">
-            <EntityTypeMapping TypeName="acmtsysdbModel.CustomerAddress">
+            <EntityTypeMapping TypeName="AcmtSysDbModel.CustomerAddress">
               <MappingFragment StoreEntitySet="CustomerAddress">
-                <ScalarProperty Name="CustomerAddressId" ColumnName="CustomerAddressId" />
-                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
-                <ScalarProperty Name="AddressType" ColumnName="AddressType" />
-                <ScalarProperty Name="City" ColumnName="City" />
-                <ScalarProperty Name="State" ColumnName="State" />
-                <ScalarProperty Name="PostalCode" ColumnName="PostalCode" />
-                <ScalarProperty Name="CountryName" ColumnName="CountryName" />
-                <ScalarProperty Name="AddressLineOne" ColumnName="AddressLineOne" />
-                <ScalarProperty Name="AddressLineTwo" ColumnName="AddressLineTwo" />
                 <ScalarProperty Name="AddressLineThree" ColumnName="AddressLineThree" />
+                <ScalarProperty Name="AddressLineTwo" ColumnName="AddressLineTwo" />
+                <ScalarProperty Name="AddressLineOne" ColumnName="AddressLineOne" />
+                <ScalarProperty Name="CountryName" ColumnName="CountryName" />
+                <ScalarProperty Name="PostalCode" ColumnName="PostalCode" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="AddressType" ColumnName="AddressType" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="CustomerAddressId" ColumnName="CustomerAddressId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="CustomerEmails">
-            <EntityTypeMapping TypeName="acmtsysdbModel.CustomerEmail">
+            <EntityTypeMapping TypeName="AcmtSysDbModel.CustomerEmail">
               <MappingFragment StoreEntitySet="CustomerEmail">
-                <ScalarProperty Name="CustomerEmailId" ColumnName="CustomerEmailId" />
-                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
-                <ScalarProperty Name="EmailType" ColumnName="EmailType" />
-                <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
                 <ScalarProperty Name="AllowReceiveNews" ColumnName="AllowReceiveNews" />
+                <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
+                <ScalarProperty Name="EmailType" ColumnName="EmailType" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="CustomerEmailId" ColumnName="CustomerEmailId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="CustomerPhones">
-            <EntityTypeMapping TypeName="acmtsysdbModel.CustomerPhone">
+            <EntityTypeMapping TypeName="AcmtSysDbModel.CustomerPhone">
               <MappingFragment StoreEntitySet="CustomerPhone">
-                <ScalarProperty Name="CustomerPhoneId" ColumnName="CustomerPhoneId" />
-                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
-                <ScalarProperty Name="PhoneType" ColumnName="PhoneType" />
-                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
-                <ScalarProperty Name="PhoneContryCode" ColumnName="PhoneContryCode" />
                 <ScalarProperty Name="AreaCode" ColumnName="AreaCode" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Customers">
-            <EntityTypeMapping TypeName="acmtsysdbModel.Customer">
-              <MappingFragment StoreEntitySet="Customers">
+                <ScalarProperty Name="PhoneContryCode" ColumnName="PhoneContryCode" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="PhoneType" ColumnName="PhoneType" />
                 <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
-                <ScalarProperty Name="BranchId" ColumnName="BranchId" />
-                <ScalarProperty Name="CustomerType" ColumnName="CustomerType" />
-                <ScalarProperty Name="Prefix" ColumnName="Prefix" />
-                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
-                <ScalarProperty Name="LastName" ColumnName="LastName" />
-                <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
-                <ScalarProperty Name="Sex" ColumnName="Sex" />
-                <ScalarProperty Name="IdCard" ColumnName="IdCard" />
-                <ScalarProperty Name="PassportNumber" ColumnName="PassportNumber" />
-                <ScalarProperty Name="Birthdate" ColumnName="Birthdate" />
-                <ScalarProperty Name="RegisterDateUTC" ColumnName="RegisterDateUTC" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="CustomerPhoneId" ColumnName="CustomerPhoneId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="MasterBankAccountTypes">
-            <EntityTypeMapping TypeName="acmtsysdbModel.MasterBankAccountType">
+            <EntityTypeMapping TypeName="AcmtSysDbModel.MasterBankAccountType">
               <MappingFragment StoreEntitySet="MasterBankAccountTypes">
-                <ScalarProperty Name="MasterBankAccountTypeId" ColumnName="MasterBankAccountTypeId" />
-                <ScalarProperty Name="AccountType" ColumnName="AccountType" />
-                <ScalarProperty Name="AccountName" ColumnName="AccountName" />
                 <ScalarProperty Name="AccountDescription" ColumnName="AccountDescription" />
+                <ScalarProperty Name="AccountName" ColumnName="AccountName" />
+                <ScalarProperty Name="AccountType" ColumnName="AccountType" />
+                <ScalarProperty Name="MasterBankAccountTypeId" ColumnName="MasterBankAccountTypeId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="MasterBankTransactionTypes">
-            <EntityTypeMapping TypeName="acmtsysdbModel.MasterBankTransactionType">
+            <EntityTypeMapping TypeName="AcmtSysDbModel.MasterBankTransactionType">
               <MappingFragment StoreEntitySet="MasterBankTransactionTypes">
-                <ScalarProperty Name="MasterBankTransactionTypeId" ColumnName="MasterBankTransactionTypeId" />
-                <ScalarProperty Name="TransactionType" ColumnName="TransactionType" />
-                <ScalarProperty Name="TransactionName" ColumnName="TransactionName" />
                 <ScalarProperty Name="TransactionDesscription" ColumnName="TransactionDesscription" />
-                <ScalarProperty Name="FeeRate" ColumnName="FeeRate" />
+                <ScalarProperty Name="TransactionName" ColumnName="TransactionName" />
+                <ScalarProperty Name="TransactionType" ColumnName="TransactionType" />
+                <ScalarProperty Name="MasterBankTransactionTypeId" ColumnName="MasterBankTransactionTypeId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Transactions">
-            <EntityTypeMapping TypeName="acmtsysdbModel.Transaction">
+            <EntityTypeMapping TypeName="AcmtSysDbModel.Transaction">
               <MappingFragment StoreEntitySet="Transactions">
-                <ScalarProperty Name="TransactionId" ColumnName="TransactionId" />
-                <ScalarProperty Name="AccountId" ColumnName="AccountId" />
-                <ScalarProperty Name="MasterBankTransactionTypeId" ColumnName="MasterBankTransactionTypeId" />
-                <ScalarProperty Name="TransactionDate" ColumnName="TransactionDate" />
-                <ScalarProperty Name="ValueDate" ColumnName="ValueDate" />
-                <ScalarProperty Name="CurrencyCode" ColumnName="CurrencyCode" />
-                <ScalarProperty Name="TransactionAmount" ColumnName="TransactionAmount" />
-                <ScalarProperty Name="TransactionStatus" ColumnName="TransactionStatus" />
-                <ScalarProperty Name="PreExecutionBalance" ColumnName="PreExecutionBalance" />
-                <ScalarProperty Name="PostExecutionBalance" ColumnName="PostExecutionBalance" />
-                <ScalarProperty Name="TransactionDescription" ColumnName="TransactionDescription" />
-                <ScalarProperty Name="ClientIdentifier" ColumnName="ClientIdentifier" />
-                <ScalarProperty Name="ExternalIdentifierOne" ColumnName="ExternalIdentifierOne" />
-                <ScalarProperty Name="ExternalIdentifierTwo" ColumnName="ExternalIdentifierTwo" />
                 <ScalarProperty Name="ExternalIdentifierThree" ColumnName="ExternalIdentifierThree" />
+                <ScalarProperty Name="ExternalIdentifierTwo" ColumnName="ExternalIdentifierTwo" />
+                <ScalarProperty Name="ExternalIdentifierOne" ColumnName="ExternalIdentifierOne" />
+                <ScalarProperty Name="ClientIdentifier" ColumnName="ClientIdentifier" />
+                <ScalarProperty Name="TransactionDescription" ColumnName="TransactionDescription" />
+                <ScalarProperty Name="PostExecutionBalance" ColumnName="PostExecutionBalance" />
+                <ScalarProperty Name="PreExecutionBalance" ColumnName="PreExecutionBalance" />
+                <ScalarProperty Name="TransactionStatus" ColumnName="TransactionStatus" />
+                <ScalarProperty Name="TransactionAmount" ColumnName="TransactionAmount" />
+                <ScalarProperty Name="CurrencyCode" ColumnName="CurrencyCode" />
+                <ScalarProperty Name="ValueDate" ColumnName="ValueDate" />
+                <ScalarProperty Name="TransactionDate" ColumnName="TransactionDate" />
+                <ScalarProperty Name="MasterBankTransactionTypeId" ColumnName="MasterBankTransactionTypeId" />
+                <ScalarProperty Name="AccountId" ColumnName="AccountId" />
+                <ScalarProperty Name="TransactionId" ColumnName="TransactionId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Customers">
+            <EntityTypeMapping TypeName="AcmtSysDbModel.Customer">
+              <MappingFragment StoreEntitySet="Customers">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="RegisterDateUTC" ColumnName="RegisterDateUTC" />
+                <ScalarProperty Name="Birthdate" ColumnName="Birthdate" />
+                <ScalarProperty Name="PersonalCardId" ColumnName="PersonalCardId" />
+                <ScalarProperty Name="Sex" ColumnName="Sex" />
+                <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="Prefix" ColumnName="Prefix" />
+                <ScalarProperty Name="CustomerType" ColumnName="CustomerType" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Accounts">
+            <EntityTypeMapping TypeName="AcmtSysDbModel.Account">
+              <MappingFragment StoreEntitySet="Accounts">
+                <ScalarProperty Name="CurrentBalance" ColumnName="CurrentBalance" />
+                <ScalarProperty Name="CurrencyCode" ColumnName="CurrencyCode" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="OpenDate" ColumnName="OpenDate" />
+                <ScalarProperty Name="AccountName" ColumnName="AccountName" />
+                <ScalarProperty Name="AccountNumber" ColumnName="AccountNumber" />
+                <ScalarProperty Name="MasterBankAccountTypeId" ColumnName="MasterBankAccountTypeId" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="AccountId" ColumnName="AccountId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

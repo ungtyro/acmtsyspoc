@@ -13,10 +13,10 @@ namespace Ung.AcmtSys.Business
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class AcmtsysdbEntities : DbContext
+    public partial class AcmtSysDbEntities : DbContext
     {
-        public AcmtsysdbEntities()
-            : base("name=AcmtsysdbEntities")
+        public AcmtSysDbEntities()
+            : base("name=AcmtSysDbEntities")
         {
         }
     
@@ -25,14 +25,13 @@ namespace Ung.AcmtSys.Business
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Account> Accounts { get; set; }
-        public virtual DbSet<Branch> Branches { get; set; }
         public virtual DbSet<CustomerAddress> CustomerAddresses { get; set; }
         public virtual DbSet<CustomerEmail> CustomerEmails { get; set; }
         public virtual DbSet<CustomerPhone> CustomerPhones { get; set; }
-        public virtual DbSet<Customer> Customers { get; set; }
         public virtual DbSet<MasterBankAccountType> MasterBankAccountTypes { get; set; }
         public virtual DbSet<MasterBankTransactionType> MasterBankTransactionTypes { get; set; }
         public virtual DbSet<Transaction> Transactions { get; set; }
+        public virtual DbSet<Customer> Customers { get; set; }
+        public virtual DbSet<Account> Accounts { get; set; }
     }
 }

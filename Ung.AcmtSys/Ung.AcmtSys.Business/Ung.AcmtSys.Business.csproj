@@ -74,9 +74,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AcmtSysModel.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Branch.cs">
-      <DependentUpon>AcmtSysModel.tt</DependentUpon>
-    </Compile>
+    <Compile Include="Bank.cs" />
+    <Compile Include="BankAccount.cs" />
+    <Compile Include="BankAccountFactory.cs" />
+    <Compile Include="BankCustomer.cs" />
+    <Compile Include="BankSavingAccount.cs" />
     <Compile Include="Customer.cs">
       <DependentUpon>AcmtSysModel.tt</DependentUpon>
     </Compile>
@@ -89,23 +91,21 @@
     <Compile Include="CustomerPhone.cs">
       <DependentUpon>AcmtSysModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Customer\CustomerManager.cs" />
     <Compile Include="EntitiesHelper.cs" />
-    <Compile Include="Models\CustomerModel.cs" />
     <Compile Include="MasterBankAccountType.cs">
       <DependentUpon>AcmtSysModel.tt</DependentUpon>
     </Compile>
     <Compile Include="MasterBankTransactionType.cs">
       <DependentUpon>AcmtSysModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ConstantDescription.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Transaction.cs">
       <DependentUpon>AcmtSysModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Types.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Account\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <EntityDeploy Include="AcmtSysModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>

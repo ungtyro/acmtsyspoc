@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ung.AcmtSys.Business", "Ung
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ung.AcmtSys.Service", "Ung.AcmtSys.Service\Ung.AcmtSys.Service.csproj", "{AC98B7A0-FDFD-43B8-9FFD-4DC1C1129253}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ung.AcmtSys.Business.UnitTests", "Ung.AcmtSys.Business.UnitTests\Ung.AcmtSys.Business.UnitTests.csproj", "{4E21BA11-0E52-44DE-9EE1-B80FCEB7BDD5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{AC98B7A0-FDFD-43B8-9FFD-4DC1C1129253}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AC98B7A0-FDFD-43B8-9FFD-4DC1C1129253}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AC98B7A0-FDFD-43B8-9FFD-4DC1C1129253}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4E21BA11-0E52-44DE-9EE1-B80FCEB7BDD5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E21BA11-0E52-44DE-9EE1-B80FCEB7BDD5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E21BA11-0E52-44DE-9EE1-B80FCEB7BDD5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E21BA11-0E52-44DE-9EE1-B80FCEB7BDD5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
