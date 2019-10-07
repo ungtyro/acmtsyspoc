@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using Ung.AcmtSys.Business.Exception;
 
@@ -7,8 +8,9 @@ namespace Ung.AcmtSys.Business
     public class BankSavingAccount : IBankAccount
     {
         protected readonly Guid AccountId;
-        protected decimal CurrentBalance;
-        protected Account Account;
+        //protected decimal CurrentBalance;
+        //private string _accountNumber;
+        //protected Account Account;
 
         public BankSavingAccount(AcmtSysDbEntities context, string accountNumber)
         {
@@ -18,8 +20,8 @@ namespace Ung.AcmtSys.Business
                 throw new BankSystemException($"Account number {accountNumber} is not found in system.");
             }
 
-            Account = account;
-            CurrentBalance = account.CurrentBalance;
+           // Account = account;
+            //_accountNumber = account.AccountNumber;
             AccountId = account.AccountId;
         }
 
@@ -43,14 +45,14 @@ namespace Ung.AcmtSys.Business
 
         private void DepositMoney(AcmtSysDbEntities context, decimal amount, TransactionType transactionType, decimal chargedRate)
         {
-            //var actualDepositAmount = amount - chargedAmount;
-
+            var currentAccount = GetCurrentAccountBalance(context);
+            var currentBalance = currentAccount.CurrentBalance;
             //deposit amount transaction
             var masterBankTransactionTypeId = context.MasterBankTransactionTypes.Where(x => x.TransactionType == transactionType.ToString()).Select(y => y.MasterBankTransactionTypeId).First();
-            var transactionDeposit = PrepareTransaction(amount, masterBankTransactionTypeId);
-            CurrentBalance += amount;
-            transactionDeposit.PostExecutionBalance = CurrentBalance;
-            Account.CurrentBalance = CurrentBalance;
+            var transactionDeposit = PrepareTransaction(amount, masterBankTransactionTypeId, currentBalance);
+            currentBalance += amount;
+            transactionDeposit.PostExecutionBalance = currentBalance;
+            currentAccount.CurrentBalance = currentBalance;
             context.Transactions.Add(transactionDeposit);
 
             if (chargedRate > 0)
@@ -60,15 +62,22 @@ namespace Ung.AcmtSys.Business
                 var chargeTransactionId = context.MasterBankTransactionTypes
                     .Where(x => x.TransactionType == TransactionType.CM.ToString())
                     .Select(y => y.MasterBankTransactionTypeId).First();
-                var transactionCharge = PrepareTransaction(chargedAmount, chargeTransactionId);
-                CurrentBalance -= chargedAmount;
-                transactionCharge.PostExecutionBalance = CurrentBalance;
-                Account.CurrentBalance = CurrentBalance;
+                var transactionCharge = PrepareTransaction(chargedAmount, chargeTransactionId, currentBalance);
+                currentBalance -= chargedAmount;
+                transactionCharge.PostExecutionBalance = currentBalance;
+                currentAccount.CurrentBalance = currentBalance;
                 context.Transactions.Add(transactionCharge);
             }
 
-
-            context.SaveChanges();
+            try
+            {
+                context.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                ReloadAccount(context, currentAccount);
+                DepositMoney(context, amount, transactionType, chargedRate);
+            }
         }
 
         /// <summary>
@@ -83,18 +92,29 @@ namespace Ung.AcmtSys.Business
 
         private void WithdrawMoney(AcmtSysDbEntities context, decimal amount, TransactionType transactionType)
         {
-            if (CurrentBalance < amount)
+            var currentAccount = GetCurrentAccountBalance(context);
+            var currentBalance = currentAccount.CurrentBalance;
+            if (currentBalance < amount)
             {
                 throw new BankSystemException("Insufficient funds");
             }
 
             var masterBankTransactionTypeId = context.MasterBankTransactionTypes.Where(x => x.TransactionType == transactionType.ToString()).Select(y => y.MasterBankTransactionTypeId).First();
-            var transaction = PrepareTransaction(amount, masterBankTransactionTypeId);
-            CurrentBalance -= amount;
-            transaction.PostExecutionBalance = CurrentBalance;
+            var transaction = PrepareTransaction(amount, masterBankTransactionTypeId, currentBalance);
+            currentBalance -= amount;
+            transaction.PostExecutionBalance = currentBalance;
             context.Transactions.Add(transaction);
-            Account.CurrentBalance = CurrentBalance;
-            context.SaveChanges();
+            currentAccount.CurrentBalance = currentBalance;
+            try
+            {
+                context.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                ReloadAccount(context, currentAccount);
+                WithdrawMoney(context, amount, transactionType);
+            }
+            
         }
 
         /// <summary>
@@ -115,7 +135,7 @@ namespace Ung.AcmtSys.Business
         }
 
 
-        private Transaction PrepareTransaction(decimal amount, Guid masterBankTransactionTypeId)
+        private Transaction PrepareTransaction(decimal amount, Guid masterBankTransactionTypeId, decimal preCurrentBalance)
         {
             return new Transaction
             {
@@ -127,8 +147,19 @@ namespace Ung.AcmtSys.Business
                 CurrencyCode = Currencies.USD.ToString(),
                 TransactionAmount = amount,
                 TransactionStatus = TransactionStatusType.Complete.ToString(),
-                PreExecutionBalance = CurrentBalance
+                PreExecutionBalance = preCurrentBalance
             };
+        }
+
+        private Account GetCurrentAccountBalance(AcmtSysDbEntities context)
+        {
+            var account = context.Accounts.FirstOrDefault(x => x.AccountId == AccountId);
+            return account;
+        }
+
+        private void ReloadAccount(AcmtSysDbEntities context, Account account)
+        {
+            context.Entry(account).Reload();
         }
     }
 }

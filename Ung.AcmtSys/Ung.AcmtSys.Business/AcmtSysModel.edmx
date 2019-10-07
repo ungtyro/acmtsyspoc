@@ -434,7 +434,7 @@
           <Property Name="OpenDate" Type="DateTime" Precision="3" />
           <Property Name="Status" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="CurrencyCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="CurrentBalance" Type="Decimal" Nullable="false" Precision="18" Scale="5" />
+          <Property Name="CurrentBalance" Type="Decimal" Nullable="false" Precision="18" Scale="5" ConcurrencyMode="Fixed" />
           <NavigationProperty Name="Customer" Relationship="AcmtSysDbModel.FK_Accounts_Customers" FromRole="Account" ToRole="Customer" />
           <NavigationProperty Name="MasterBankAccountType" Relationship="AcmtSysDbModel.FK_Accounts_MasterBankAccountTypes" FromRole="Account" ToRole="MasterBankAccountType" />
           <NavigationProperty Name="Transactions" Relationship="AcmtSysDbModel.FK_Transactions_Accounts" FromRole="Account" ToRole="Transaction" />

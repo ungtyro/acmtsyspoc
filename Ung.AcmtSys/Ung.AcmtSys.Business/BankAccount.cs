@@ -1,7 +1,4 @@
-﻿using System;
-using System.Linq;
-
-namespace Ung.AcmtSys.Business
+﻿namespace Ung.AcmtSys.Business
 {
     public interface IBankAccount
     {

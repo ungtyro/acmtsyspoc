@@ -1,6 +1,6 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Ung.AcmtSys.Business;
+using Ung.AcmtSys.Business.Exception;
 
 namespace Ung.AcmtSys.Business.UnitTests
 {
@@ -37,7 +37,7 @@ namespace Ung.AcmtSys.Business.UnitTests
             {
                 _bank.AddPersonalCustomer(_context, newCustomer);
             }
-            catch (Exception e)
+            catch (System.Exception e)
             {
                 Assert.Fail(e.Message);
             }
@@ -91,7 +91,7 @@ namespace Ung.AcmtSys.Business.UnitTests
             {
                 _bank.AddPersonalCustomer(_context, newCustomerB);
             }
-            catch (Exception e)
+            catch (System.Exception e)
             {
                 Assert.Fail(e.Message);
             }
@@ -132,7 +132,7 @@ namespace Ung.AcmtSys.Business.UnitTests
                 savingAccount.WithdrawMoney(_context, 1000m);
                 Assert.Fail("Insufficient funds should be thrown");
             }
-            catch (ArgumentException)
+            catch (BankSystemException)
             {
             }
 
@@ -144,7 +144,7 @@ namespace Ung.AcmtSys.Business.UnitTests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
+        [ExpectedException(typeof(BankSystemException))]
         public void TestCustomerNotFound()
         {
 
@@ -155,7 +155,7 @@ namespace Ung.AcmtSys.Business.UnitTests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
+        [ExpectedException(typeof(BankSystemException))]
         public void TestBankSavingAccountNotFound()
         {
             var bankSavingAccount = new BankSavingAccount(_context, Guid.NewGuid().ToString());

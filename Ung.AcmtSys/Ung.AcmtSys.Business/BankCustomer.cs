@@ -20,19 +20,36 @@ namespace Ung.AcmtSys.Business
             _customerId = customer.CustomerId;
         }
 
-
+        /// <summary>
+        /// Provide a bank account of customer
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="accountNumber"></param>
+        /// <returns></returns>
         public Account GetAccount(AcmtSysDbEntities context, string accountNumber)
         {
             return context.Accounts.FirstOrDefault(x =>
                 x.Customer.CustomerId == _customerId && x.AccountNumber == accountNumber);
         }
 
+        /// <summary>
+        /// Provide all bank account of customer
+        /// </summary>
+        /// <param name="context"></param>
+        /// <returns></returns>
         public List<Account> GetAccounts(AcmtSysDbEntities context)
         {
             return context.Accounts.Where(x =>
                 x.Customer.CustomerId == _customerId).ToList();
         }
 
+        /// <summary>
+        /// Open a new bank account with default currency USD
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="accountName"></param>
+        /// <param name="accountType"></param>
+        /// <returns></returns>
         public string RequestToOpenAccount(AcmtSysDbEntities context, string accountName, BankAccountType accountType)
         {
             var masterBankAccountType = context.MasterBankAccountTypes.First(x=>x.AccountType == accountType.ToString());

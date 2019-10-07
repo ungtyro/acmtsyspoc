@@ -12,10 +12,10 @@ namespace Ung.AcmtSys.Service.Controllers
     [CustomException]
     public class BankAccountController : ApiController
     {
-        private readonly ExceptionHelper.ExceptionHandler _exceptionHandler;
+        private readonly ExceptionHandler _exceptionHandler;
         public BankAccountController()
         {
-            _exceptionHandler = new ExceptionHelper.ExceptionHandler();
+            _exceptionHandler = new ExceptionHandler();
         }
 
         /// <summary>
