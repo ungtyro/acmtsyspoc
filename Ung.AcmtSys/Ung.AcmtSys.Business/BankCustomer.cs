@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using sinkien.IBAN4Net;
 using Ung.AcmtSys.Business.Exception;
 
 namespace Ung.AcmtSys.Business
@@ -59,7 +60,7 @@ namespace Ung.AcmtSys.Business
                 AccountId = Guid.NewGuid(),
                 CustomerId = _customerId,
                 MasterBankAccountTypeId = masterBankAccountType.MasterBankAccountTypeId,
-                AccountNumber =Guid.NewGuid().ToString(),
+                AccountNumber = GenerateInternationalBankAccountNumber(),
                 AccountName = accountName,
                 OpenDate = DateTime.UtcNow,
                 Status = AccountStatusType.Open.ToString(),
@@ -71,6 +72,20 @@ namespace Ung.AcmtSys.Business
             context.SaveChanges();
 
             return account.AccountNumber;
+        }
+
+        private string GenerateInternationalBankAccountNumber()
+        {
+            var internalAccountNumber = DateTime.UtcNow.ToString("yyMMddHHff");
+            //NL28INGB3014449407 NL  28  INGB 
+            var iban = new IbanBuilder()
+                .CountryCode(CountryCode.GetCountryCode("NL"))
+                .BankCode("INGB")
+                .AccountNumberPrefix("30")//30 14 449 407
+                .AccountNumber(internalAccountNumber)
+                .Build();
+
+            return iban.ToString();
         }
     }
 }

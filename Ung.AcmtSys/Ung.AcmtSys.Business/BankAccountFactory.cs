@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Ung.AcmtSys.Business.Exception;
 
 namespace Ung.AcmtSys.Business
 {
@@ -27,6 +25,12 @@ namespace Ung.AcmtSys.Business
                         //Other case implement
 
                 }
+            }
+            else
+            {
+
+                throw new BankSystemException($"Account number {accountNumber} is not found in system.");
+
             }
 
             return bankAccount;
