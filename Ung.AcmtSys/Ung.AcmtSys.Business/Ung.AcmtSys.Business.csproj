@@ -92,6 +92,7 @@
       <DependentUpon>AcmtSysModel.tt</DependentUpon>
     </Compile>
     <Compile Include="EntitiesHelper.cs" />
+    <Compile Include="Exception\BankSystemException.cs" />
     <Compile Include="MasterBankAccountType.cs">
       <DependentUpon>AcmtSysModel.tt</DependentUpon>
     </Compile>

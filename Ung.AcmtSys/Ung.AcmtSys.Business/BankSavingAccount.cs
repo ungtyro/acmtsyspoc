@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Ung.AcmtSys.Business.Exception;
 
 namespace Ung.AcmtSys.Business
 {
@@ -14,7 +15,7 @@ namespace Ung.AcmtSys.Business
             var account = context.Accounts.FirstOrDefault(x => x.AccountNumber == accountNumber);
             if (account == null)
             {
-                throw new ArgumentException($"Account number {accountNumber} is not found in system.");
+                throw new BankSystemException($"Account number {accountNumber} is not found in system.");
             }
 
             Account = account;
@@ -84,7 +85,7 @@ namespace Ung.AcmtSys.Business
         {
             if (CurrentBalance < amount)
             {
-                throw new ArgumentException("Insufficient funds");
+                throw new BankSystemException("Insufficient funds");
             }
 
             var masterBankTransactionTypeId = context.MasterBankTransactionTypes.Where(x => x.TransactionType == transactionType.ToString()).Select(y => y.MasterBankTransactionTypeId).First();

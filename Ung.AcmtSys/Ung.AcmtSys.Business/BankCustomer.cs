@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Ung.AcmtSys.Business.Exception;
 
 namespace Ung.AcmtSys.Business
 {
@@ -13,7 +14,7 @@ namespace Ung.AcmtSys.Business
             var customer = context.Customers.FirstOrDefault(x => x.PersonalCardId == personalCardId);
             if (customer == null)
             {
-                throw new ArgumentException($"A customer with this Personal ID {personalCardId} is not found in system.");
+                throw new BankSystemException($"A customer with this Personal ID {personalCardId} is not found in system.");
             }
 
             _customerId = customer.CustomerId;
