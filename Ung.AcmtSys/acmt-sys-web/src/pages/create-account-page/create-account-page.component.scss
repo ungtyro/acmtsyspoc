@@ -1,0 +1,27 @@
+
+create-account-page{
+    .create-account-page{
+        padding: 24px 0px 0px;
+
+        .page-title{
+            font-size: 30px;
+            margin-bottom: 32px;
+        }
+    }
+    .full-width{
+        width: 100%;
+    }
+    .account-form{
+        > * > div + div {
+            margin-left: 16px;
+        }
+        .account-form-actions{
+            margin-top: 16px;
+        }
+    }
+
+    [desktop-width]{
+        padding: 0px 24px;
+    }
+
+}

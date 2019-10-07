@@ -1,0 +1,31 @@
+
+
+create-customer-page{
+
+    .create-customer-page{
+        padding: 24px 0px 0px;
+
+        .page-title{
+            font-size: 30px;
+            margin-bottom: 32px;
+        }
+    }
+
+    .full-width{
+        width: 100%;
+    }
+
+    .customer-form{
+        > * > div + div {
+            margin-left: 16px;
+        }
+        .customer-form-actions{
+            margin-top: 16px;
+        }
+    }
+
+    [desktop-width]{
+        padding: 0px 24px;
+    }
+
+}

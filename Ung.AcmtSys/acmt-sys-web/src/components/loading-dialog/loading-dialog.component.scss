@@ -1,0 +1,25 @@
+loading-dialog{
+    display: block;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    height: 100%;
+    width: 100%;
+
+    .loading-dialog{
+        height: 100%;
+        width: 100%;
+    }
+
+    .loading-dialog-icon{
+        mat-spinner{
+            margin: 0 auto;
+        }
+    }
+
+    .loading-dialog-text{
+        margin-top: 24px;
+        text-align: center;
+    }
+
+}

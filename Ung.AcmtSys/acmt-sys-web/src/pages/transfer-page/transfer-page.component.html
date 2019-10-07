@@ -1,0 +1,107 @@
+<div 
+    class="transfer-page"
+    flex-direction="column">
+    <div 
+        class="page-title"
+        flex-size="0"
+        desktop-width="true" 
+        desktop-justify="center">
+        <span>Transfer</span>
+    </div>
+    <div
+        flex-size="1"
+        scroll="y">
+        <div
+            desktop-width="true" 
+            desktop-justify="center">
+            <div class="source-account-form-title">
+                <span>Source Account</span>
+            </div>
+            <div class="source-account-form">
+                <div>
+                    <mat-form-field class="full-width">
+                        <input disabled matInput placeholder="Account Name" [(ngModel)]="transferForm.source.accountName"/>
+                    </mat-form-field>
+                </div>
+                <div>
+                    <mat-form-field class="full-width">
+                        <input disabled matInput placeholder="Account No." [(ngModel)]="transferForm.source.accountNo"/>
+                    </mat-form-field>
+                </div>
+                <!-- <div>
+                    <mat-form-field class="full-width">
+                        <input disabled matInput placeholder="Current" [(ngModel)]="transferForm.source.current"/>
+                    </mat-form-field>
+                </div>         -->
+            </div>
+            <div class="destination-account-form-title">
+                <span>Destination Account</span>
+            </div>
+            <!-- <div 
+                class="search-form"
+                flex-direction="row"
+                flex-align="center">
+                <div flex-size="0">
+                    <mat-form-field>
+                        <mat-label>ประเภท</mat-label>
+                        <mat-select [(ngModel)]="destinationSearchForm.type">
+                            <mat-option *ngFor="let type of searchTypes" [value]="type.id">
+                                <span>{{type.title}}</span>
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div flex-size="1">
+                    <mat-form-field class="full-width">
+                        <input matInput placeholder="Search Text"  [(ngModel)]="destinationSearchForm.text"/>
+                    </mat-form-field>
+                </div>
+                <div flex-size="0">
+                    <button mat-icon-button (click)="btnDestinationSearch()">
+                        <mat-icon>search</mat-icon>
+                    </button>
+                </div>
+            </div> -->
+            <div class="destination-account-form">
+                <!-- <div>
+                    <mat-form-field class="full-width">
+                        <input disabled matInput placeholder="Account Name" [(ngModel)]="transferForm.destination.accountName"/>
+                    </mat-form-field>
+                </div> -->
+                <div>
+                    <mat-form-field class="full-width">
+                        <input matInput placeholder="Account No." [(ngModel)]="transferForm.destination.accountNo"/>
+                    </mat-form-field>
+                </div>
+                <!-- <div>
+                    <mat-form-field class="full-width">
+                        <input disabled matInput placeholder="Current" [(ngModel)]="transferForm.destination.current"/>
+                    </mat-form-field>
+                </div>         -->
+            </div>
+            <div class="transfer-from">
+                <div>
+                    <div>
+                        <mat-form-field class="full-width">
+                            <input type="number" matInput placeholder="Transfer Amount" [(ngModel)]="transferForm.transfer"/>
+                        </mat-form-field>
+                    </div>
+                    <div flex-direction="row">
+                        <div flex-size="1">
+                            <button mat-raised-button (click)="btnCancel()">
+                                <span>Cancel</span>
+                            </button>
+                        </div>
+                        <div flex-size="0">
+                            <button 
+                                [disabled]="!enabledTransfer()" mat-raised-button color="primary"
+                                (click)="btnTransfer()">
+                                <span>Transfer</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

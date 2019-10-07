@@ -1,0 +1,28 @@
+
+
+main-master-page{
+
+    .menu{
+        width:270px;
+        background-color: #5a5a5a;
+        color: white;
+        box-sizing: border-box;
+    }
+
+    .memu-action-item{
+        position: relative;
+        padding: 24px 16px;
+        &[actived="true"]{
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+    }
+
+
+    .memu-action-items{
+        margin-top: 160px;
+        > .memu-action-item + .memu-action-item{
+            margin-top: 24px;
+        }
+    }
+
+}

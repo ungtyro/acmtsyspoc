@@ -1,0 +1,43 @@
+<div class="deposit-page" flex-direction="column">
+    <div class="page-title" flex-size="0" desktop-width="true" desktop-justify="center">
+        <span>Deposit</span>
+    </div>
+    <div flex-size="1" scroll="y">
+        <div desktop-width="true" desktop-justify="center">
+            <div class="deposit-form">
+                <div>
+                    <mat-form-field class="full-width">
+                        <input disabled matInput placeholder="Account Name" [(ngModel)]="depositForm.accountName" />
+                    </mat-form-field>
+                </div>
+                <div>
+                    <mat-form-field class="full-width">
+                        <input disabled matInput placeholder="Account Number" [(ngModel)]="depositForm.accountNo" />
+                    </mat-form-field>
+                </div>
+                <!-- <div>
+                    <mat-form-field class="full-width">
+                        <input disabled matInput placeholder="Current" [(ngModel)]="depositForm.current"/>
+                    </mat-form-field>
+                </div> -->
+                <div>
+                    <mat-form-field class="full-width">
+                        <input [disabled]="!isSetAccount()" type="number" matInput placeholder="Deposit Amount" [(ngModel)]="depositForm.deposit" />
+                    </mat-form-field>
+                </div>
+                <div flex-direction="row" class="deposit-actions">
+                    <div flex-size="1">
+                        <button mat-raised-button (click)="btnCancel()">
+                            <span>Cancel</span>
+                        </button>
+                    </div>
+                    <div flex-size="0">
+                        <button mat-raised-button color="primary" [disabled]="!enabledDeposit()" (click)="btnDeposit()">
+                            <span>Deposit</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

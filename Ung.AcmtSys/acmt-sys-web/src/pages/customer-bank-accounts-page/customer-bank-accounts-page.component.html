@@ -1,0 +1,137 @@
+<div class="customer-bank-accounts-page" flex-direction="column">
+    <div flex-size="0" class="page-title" desktop-width="true" desktop-justify="center" flex-direction="row" flex-align="center">
+        <div flex-size="0">
+            <span>Customer</span>
+        </div>
+        <div flex-size="0">
+            <button mat-raised-button color="primary" (click)="btnNewCustomer()">
+                <span>New Customer</span>
+            </button>
+        </div>
+    </div>
+    <div flex-size="1" scroll="y">
+        <div desktop-width="true" desktop-justify="center">
+            <div class="customer-section">
+                <div class="search-form" flex-direction="row" flex-align="center">
+                    <!-- <div flex-size="0">
+                        <mat-form-field>
+                            <mat-label>ประเภท</mat-label>
+                            <mat-select [(ngModel)]="customerSearchForm.type">
+                                <mat-option *ngFor="let option of customerSearchOptions" [value]="option.id">
+                                    <span>{{option.title}}</span>
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div> -->
+                    <div flex-size="1">
+                        <mat-form-field class="full-width">
+                            <input matInput placeholder="Search Text" [(ngModel)]="customerSearchForm.text" (keydown)="onKeydown($event)" />
+                        </mat-form-field>
+                    </div>
+                    <div flex-size=" 0">
+                        <button mat-icon-button (click)="btnCustomerSearch()">
+                            <mat-icon>search</mat-icon>
+                        </button>
+                    </div>
+                </div>
+                <div class="title">
+                    <span>Information</span>
+                </div>
+                <div class="customer-info" *ngIf="customerInfo.id !=null">
+                    <div flex-direction="row">
+                        <span>Frist name : </span>
+                        <span>{{customerInfo.firstname}}</span>
+                    </div>
+                    <div>
+                        <span>Last name : </span>
+                        <span>{{customerInfo.firstname}}</span>
+                    </div>
+                    <div>
+                        <span>Personal Id : </span>
+                        <span>{{customerInfo.personalId}}</span>
+                    </div>
+                    <div>
+                        <span>Birth Date : </span>
+                        <span>{{customerInfo.birthDate | date :"dd MMM yyyy" }}</span>
+                    </div>
+                    <div>
+                        <span>Gender : </span>
+                        <span>{{genderType[customerInfo.gender]}}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="bank-account-section" *ngIf="customerInfo.id != null">
+                <div flex-direction="row" class="header" flex-align="center">
+                    <div class="title" flex-size="0">
+                        <span>Accounts</span>
+                    </div>
+                    <div flex-size="0">
+                        <button mat-raised-button color="primary" (click)="btnNewAccount()">
+                            <span>New Account</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="search-form" flex-direction="row" flex-align="center">
+                    <!-- <div flex-size="0">
+                        <mat-form-field>
+                            <mat-label>ประเภท</mat-label>
+                            <mat-select [(ngModel)]="bankAccountSearchForm.type">
+                                <mat-option *ngFor="let option of bankAccountSearchOptions" [value]="option.id">
+                                    <span>{{option.title}}</span>
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div> -->
+                    <div flex-size="1">
+                        <mat-form-field class="full-width">
+                            <input matInput placeholder="Search Text" [(ngModel)]="bankAccountSearchForm.text" (keydown)="onKeydownAccount($event)" />
+                        </mat-form-field>
+                    </div>
+                    <div flex-size="0">
+                        <button mat-icon-button (click)="btnAccountSearch()">
+                            <mat-icon>search</mat-icon>
+                        </button>
+                    </div>
+                </div>
+                <div class="bank-account-items">
+                    <mat-card class="bank-account-item" *ngFor="let account of accounts">
+                        <div flex-direction="row" flex-align="center">
+                            <div flex-size="1" class="bank-account-item-info">
+                                <div>
+                                    <span>Account Name: </span>
+                                    <span>{{account.name}}</span>
+                                </div>
+                                <div>
+                                    <span>Account Number: </span>
+                                    <span>{{account.no}}</span>
+                                </div>
+                                <!-- <div flex-direction="row">
+                                    <div flex-size="0">
+                                        <span>Type : </span>
+                                        <span>Saving</span>
+                                    </div>
+                                    <div flex-size="0">
+                                        <span>Branch : </span>
+                                        <span>Silom</span>
+                                    </div>
+                                </div> -->
+                            </div>
+                            <div flex-size="0" class="bank-account-item-actions">
+                                <div>
+                                    <button mat-raised-button color="accent" (click)="btnDeposit(account)">
+                                        <span>Deposit</span>
+                                    </button>
+                                </div>
+                                <div>
+                                    <button mat-raised-button color="accent" (click)="btnTransfer(account)">
+                                        <span>Transfer</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </mat-card>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

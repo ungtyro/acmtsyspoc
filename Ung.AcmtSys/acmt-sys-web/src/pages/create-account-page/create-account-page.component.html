@@ -1,0 +1,51 @@
+<div 
+    class="create-account-page"
+    flex-direction="column">
+    <div 
+        flex-size="0"
+        class="page-title" 
+        desktop-width="true" 
+        desktop-justify="center">
+        <span>Create Account</span>
+    </div>
+    <div 
+        flex-size="1"
+        scroll="y">
+        <div
+            desktop-width="true" 
+            desktop-justify="center">
+            <div class="account-form">
+                <div>
+                    <mat-form-field class="full-width">
+                        <input matInput placeholder="Account Name" [(ngModel)]="accountForm.name"/>
+                    </mat-form-field>
+                </div>
+                <!-- <div>
+                    <mat-form-field class="full-width">
+                        <mat-label>Account Type</mat-label>
+                        <mat-select [(ngModel)]="accountForm.type" >
+                            <mat-option *ngFor="let option of accountOptions" [value]="option.id">
+                                <span>{{option.title}}</span>
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div> -->
+                <div 
+                    flex-direction="row"
+                    class="account-form-actions">
+                    <div flex-size="1">
+                        <button mat-raised-button (click)="btnCancel()">
+                            <span>Cancel</span>
+                        </button>
+                    </div>
+                    <div flex-size="0">
+                        <button [disabled]="!enabledCreate()" mat-raised-button color="primary"
+                                (click)="btnCreate()">
+                            <span>Create</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

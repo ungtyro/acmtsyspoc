@@ -1,0 +1,35 @@
+transfer-page{
+    .transfer-page{
+        padding: 24px 0px 0px;
+
+        .page-title{
+            font-size: 30px;
+            margin-bottom: 32px;
+        }
+
+        .full-width{
+            width: 100%;
+        }
+    }
+
+    .search-form{
+        > * + * {
+            margin-left: 16px;
+        }
+    }
+
+    .source-account-form-title,
+    .destination-account-form-title{
+        font-size: 20px;
+        margin-bottom: 16px;
+    }
+
+    .destination-account-form-title{
+        margin-top: 32px;
+    }
+
+    [desktop-width]{
+        padding: 0px 24px;
+    }
+
+}

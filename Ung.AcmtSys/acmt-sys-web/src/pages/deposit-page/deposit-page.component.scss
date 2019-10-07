@@ -1,0 +1,18 @@
+deposit-page {
+    .deposit-page {
+        padding: 24px 0px 0px;
+        .page-title {
+            font-size: 30px;
+            margin-bottom: 32px;
+        }
+        .full-width {
+            width: 100%;
+        }
+    }
+    .deposit-actions {
+        margin-top: 16px;
+    }
+    [desktop-width] {
+        padding: 0px 24px;
+    }
+}

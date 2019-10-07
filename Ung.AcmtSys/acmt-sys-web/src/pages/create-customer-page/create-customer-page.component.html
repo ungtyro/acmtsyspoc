@@ -1,0 +1,66 @@
+<div 
+    class="create-customer-page"
+    flex-direction="column">
+    <div 
+        flex-size="0"
+        class="page-title" 
+        desktop-width="true" 
+        desktop-justify="center">
+        <span>Create Customer</span>
+    </div>
+    <div 
+        flex-size="1"
+        scroll="y">
+        <div
+            desktop-width="true" 
+            desktop-justify="center">
+            <div class="customer-form">
+                <div>
+                    <mat-form-field class="full-width">
+                        <input matInput placeholder="Personal Id" [(ngModel)]="customerForm.personalId"/>
+                    </mat-form-field>
+                </div>
+                <div flex-direction="row">
+                    <div flex-size="1">
+                        <mat-form-field class="full-width">
+                            <input matInput placeholder="First name" [(ngModel)]="customerForm.firstname"/>
+                        </mat-form-field>
+                    </div>
+                    <div flex-size="1">
+                        <mat-form-field class="full-width">
+                            <input matInput placeholder="Last name" [(ngModel)]="customerForm.lastname"/>
+                        </mat-form-field>
+                    </div>
+                </div>                
+                <div>
+                    <mat-form-field class="full-width">
+                        <mat-label>Gender</mat-label>
+                        <mat-select [(ngModel)]="customerForm.gender">
+                            <mat-option value="M">
+                                <span>Male</span>
+                            </mat-option>
+                            <mat-option value="F">
+                                <span>Female</span>
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div 
+                    flex-direction="row"
+                    class="customer-form-actions">
+                    <div flex-size="1">
+                        <button mat-raised-button (click)="btnCancel()">
+                            <span>Cancel</span>
+                        </button>
+                    </div>
+                    <div flex-size="0">
+                        <button [disabled]="!enabledCreate()" mat-raised-button color="primary"
+                                (click)="btnCreate()">
+                            <span>Create</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

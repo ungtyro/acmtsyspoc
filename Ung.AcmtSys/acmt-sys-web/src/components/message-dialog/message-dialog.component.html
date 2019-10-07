@@ -1,0 +1,19 @@
+<div class="message-dialog">
+    <div class="mat-headline">
+        <span>{{title}}</span>
+    </div>
+    <div>
+        <span>{{description}}</span>
+    </div>
+    <div class="message-dialog-action-items">
+        <button mat-raised-button lb-font-color="fail"
+                *ngIf="!isAlert"
+                (click)="btnCancel()">
+            <span>{{cancelText}}</span>
+        </button>
+        <button mat-raised-button color="primary"
+                (click)="btnConfirm()">
+            <span>{{confirmText}}</span>
+        </button>
+    </div>
+</div>

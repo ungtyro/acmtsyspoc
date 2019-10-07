@@ -1,0 +1,18 @@
+<div class="main-master-page" flex-direction="row">
+    <div class="menu" flex-size="0">
+        <div class="memu-action-items">
+            <div class="memu-action-item" matRipple [attr.actived]="selectedMenuId == 1" (click)="btnCreateAccount()">
+                <span>สร้างบัญชีใหม่</span>
+            </div>
+            <div class="memu-action-item" matRipple [attr.actived]="selectedMenuId == 2" (click)="btnDeposit()">
+                <span>ฝากเงิน</span>
+            </div>
+            <div class="memu-action-item" matRipple [attr.actived]="selectedMenuId == 3" (click)="btnTransfer()">
+                <span>โอนเงิน</span>
+            </div>
+        </div>
+    </div>
+    <div class="content" flex-size="1">
+        <router-outlet></router-outlet>
+    </div>
+</div>

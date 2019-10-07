@@ -1,0 +1,12 @@
+message-dialog{
+    display: block;
+
+    .message-dialog-action-items{
+        text-align: right;
+        margin-top: 24px;
+        > * + * {
+            margin-left: 16px;
+        }
+    }
+
+}

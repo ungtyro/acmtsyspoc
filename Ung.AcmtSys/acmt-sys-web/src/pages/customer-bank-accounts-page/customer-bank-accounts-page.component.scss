@@ -1,0 +1,97 @@
+
+customer-bank-accounts-page{
+    
+    .customer-bank-accounts-page{
+        padding: 24px 0px 0px;
+
+        .page-title{
+            font-size: 30px;
+            margin-bottom: 32px;
+            > * + * {
+                margin-left: 16px;
+            }
+        }
+    }
+
+    .full-width{
+        width: 100%;
+    }
+
+    .search-form{
+        > * + * {
+            margin-left: 16px;
+        }
+        [mat-raised-button]{
+            width: 150px;
+        }
+    }
+
+    .customer-info{
+        border: 1px solid #cecece;
+        border-radius: 10px;
+        padding: 24px;
+        > * + * {
+            margin-top: 16px;
+        }
+        > * > div {
+            width: 300px;
+        }
+        span{
+            line-height: 1.5;
+        }
+    }
+
+    .customer-section{
+        margin-bottom: 32px;
+        .title{
+            font-size: 20px;
+            margin-bottom: 16px;
+        }
+    }
+
+    .bank-account-section{
+        .header{
+            margin-bottom: 16px;
+            > * + * {
+                margin-left: 16px;
+            }
+        }
+        .title{
+            font-size: 20px;            
+        }
+    }
+
+    .bank-account-item{
+        .bank-account-item-info{
+            > * + * {
+                margin-top: 16px;
+            }
+            > * > div {
+                width: 200px;
+            }
+            span{
+                line-height: 1.5;
+            }
+        }
+        .bank-account-item-actions{
+            button{
+                width: 100px;
+            }
+            > * + * {
+                margin-top: 16px;
+            }
+        }
+    }
+
+    .bank-account-items{
+        margin-bottom: 32px;
+        > .bank-account-item + .bank-account-item{
+            margin-top: 16px;
+        }
+    }
+
+    [desktop-width]{
+        padding: 0px 24px;
+    }
+
+}
