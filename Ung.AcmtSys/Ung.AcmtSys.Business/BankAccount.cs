@@ -1,36 +1,29 @@
-﻿namespace Ung.AcmtSys.Business
+﻿using System;
+
+namespace Ung.AcmtSys.Business
 {
-    public interface IBankAccount
+    public class BankAccount : ITransaction
     {
+        /// <inheritdoc />
         /// <summary>
-        /// Deposit the input amount of money into this bank account.
+        /// Deposit the input amount of money into this bank account. (Not Implement)
         /// </summary>
         /// <param name="context"></param>
         /// <param name="amount"></param>
-        void DepositMoney(AcmtSysDbEntities context, decimal amount);
+        public virtual void DepositMoney(AcmtSysDbEntities context, decimal amount)
+        {
+          
+        }
 
+        /// <inheritdoc />
         /// <summary>
-        /// Deposit the input amount of money into this bank account.
+        /// Withdraw the given amount of money from this bank account. (Not Implement)
         /// </summary>
         /// <param name="context"></param>
         /// <param name="amount"></param>
-        void DepositMoneyFromTransfer(AcmtSysDbEntities context, decimal amount);
-
-        /// <summary>
-        /// Withdraw the given amount of money from this bank account.
-        /// </summary>
-        /// <param name="context"></param>
-        /// <param name="amount"></param>
-        void WithdrawMoney(AcmtSysDbEntities context, decimal amount);
-
-
-        /// <summary>
-        /// Transfer the input amount from this account to the given other account.
-        /// </summary>
-        /// <param name="context"></param>
-        /// <param name="destinationAccountNumber"></param>
-        /// <param name="amount"></param>
-        void TransferMoney(AcmtSysDbEntities context, string destinationAccountNumber, decimal amount);
-
+        public virtual void WithdrawMoney(AcmtSysDbEntities context, decimal amount)
+        {
+           
+        }
     }
 }

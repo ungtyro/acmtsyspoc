@@ -6,9 +6,9 @@ namespace Ung.AcmtSys.Business
 {
     public static class BankAccountFactory
     {
-        public static IBankAccount CreateInstanceAccount(AcmtSysDbEntities context, string accountNumber)
+        public static BankAccount CreateInstanceAccount(AcmtSysDbEntities context, string accountNumber)
         {
-            IBankAccount bankAccount = null;
+            BankAccount bankAccount = null;
 
             var accountType = context.Accounts.Where(x => x.AccountNumber == accountNumber)
                 .Select(y => y.MasterBankAccountType.AccountType).FirstOrDefault();

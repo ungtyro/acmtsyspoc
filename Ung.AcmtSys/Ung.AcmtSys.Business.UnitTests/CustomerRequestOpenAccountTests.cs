@@ -63,7 +63,8 @@ namespace Ung.AcmtSys.Business.UnitTests
 
             //deposit 1000 USD to account and calculate 0.1% charge amount
             var depositAmount = 1000m;
-            var savingAccount = BankAccountFactory.CreateInstanceAccount(_context, accountNumber);
+            var savingAccount = new BankSavingAccount(_context, accountNumber);
+                //BankAccountFactory.CreateInstanceAccount(_context, accountNumber);
             savingAccount.DepositMoney(_context, depositAmount);
             account = bankCustomer.GetAccount(_context, accountNumber);
             Assert.AreEqual(999, account.CurrentBalance);

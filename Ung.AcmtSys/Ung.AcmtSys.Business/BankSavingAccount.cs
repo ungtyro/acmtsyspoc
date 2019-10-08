@@ -5,7 +5,7 @@ using Ung.AcmtSys.Business.Exception;
 
 namespace Ung.AcmtSys.Business
 {
-    public class BankSavingAccount : IBankAccount
+    public class BankSavingAccount : BankAccount
     {
         protected readonly Guid AccountId;
         //protected decimal CurrentBalance;
@@ -25,14 +25,13 @@ namespace Ung.AcmtSys.Business
             AccountId = account.AccountId;
         }
 
-        /// <inheritdoc />
         /// <summary>
         /// Deposit the input amount of money into this bank account.
         /// and Charge 0.1%
         /// </summary>
         /// <param name="context"></param>
         /// <param name="amount"></param>
-        public void DepositMoney(AcmtSysDbEntities context, decimal amount)
+        public override void DepositMoney(AcmtSysDbEntities context, decimal amount)
         {
             DepositMoney(context, amount, TransactionType.PC, 0.1m);
         }
@@ -80,12 +79,15 @@ namespace Ung.AcmtSys.Business
             }
         }
 
+
+
+        /// <inheritdoc />
         /// <summary>
         /// Withdraw the input amount of money from this bank account.
         /// </summary>
         /// <param name="context"></param>
         /// <param name="amount"></param>
-        public void WithdrawMoney(AcmtSysDbEntities context, decimal amount)
+        public override void WithdrawMoney(AcmtSysDbEntities context, decimal amount)
         {
             WithdrawMoney(context, amount, TransactionType.CS);
         }
@@ -117,6 +119,9 @@ namespace Ung.AcmtSys.Business
             
         }
 
+
+
+
         /// <summary>
         /// Transfer the input amount from this account to the given other account.
         /// </summary>
@@ -130,9 +135,12 @@ namespace Ung.AcmtSys.Business
             WithdrawMoney(context, amount, TransactionType.TRW);
 
             //deposit amount to destination account
-            var destinationBankAccount = BankAccountFactory.CreateInstanceAccount(context, destinationAccountNumber);
+            var destinationBankAccount = new BankSavingAccount(context, destinationAccountNumber);
             destinationBankAccount.DepositMoneyFromTransfer(context, amount);
         }
+
+
+
 
 
         private Transaction PrepareTransaction(decimal amount, Guid masterBankTransactionTypeId, decimal preCurrentBalance)
